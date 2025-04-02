@@ -20,6 +20,7 @@ int main(int argc, char *argv[]) {
   }
   float *vet1, *vet2; //vetores a serem gerados
   int N = atoi(argv[1]); //tamanho do vetor
+  double soma = 0; //variavel para armazenar a soma dos elementos dos vetores
   size_t verif0, verif1; //variaveis para verificar a escrita no arquivo
   FILE *descritor; //descritor do arquivo
   vet1 = (float *) malloc(N*sizeof(float)); //alocacao de memoria para os vetor 1 
@@ -36,12 +37,17 @@ int main(int argc, char *argv[]) {
   preencheVetor(vet1, N);
   preencheVetor(vet2, N);
   descritor = fopen(argv[2], "wb");
+  fwrite(&N, sizeof(int), 1, descritor); 
   verif0 = fwrite(vet1, sizeof(float), N, descritor);
   verif1 = fwrite(vet2, sizeof(float), N, descritor);
   if(verif0 < N || verif1 < N) { //verifica se todos os elementos foram escritos
     fprintf(stderr, "Erro de escrita no  arquivo\n");
     return 4;
   }
+  for(int i = 0; i < N; i++) {
+    soma += vet1[i] * vet2[i]; //calcula a soma dos produtos dos elementos dos vetores
+  }
+  fwrite(&soma, sizeof(double), 1, descritor); 
   #ifdef PRINT
     printf("N = %d\nVetor1 = ", N);
     for(int i = 0; i < N; i++) {
@@ -51,6 +57,7 @@ int main(int argc, char *argv[]) {
     for(int i = 0; i < N; i++) {
       printf("%f ", vet2[i]);
     }
+    printf("\nSoma = %lf\n", soma);
   #endif
   fclose(descritor);
   free(vet1);
