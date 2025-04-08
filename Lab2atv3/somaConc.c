@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
   printf("Soma sequencial = %lf\nSoma concorrente = %lf\n", somaSeq, somaConc);
   varRelat = (somaSeq - somaConc)/somaSeq;
   if(varRelat < 0) varRelat *= -1;
-  printf("Variacao relativa = %lf\n", varRelat);
+  printf("Variacao relativa = %.15lf\n", varRelat);
   free(vet1);
   free(vet2);
   free(tid);
