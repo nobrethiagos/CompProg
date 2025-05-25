@@ -4,7 +4,7 @@
 #include<semaphore.h>
 #include<math.h>
 
-int *lista, listaEnd = 0, verif, *cont, N, M, C;
+int *lista, verif, *cont, N, M, C;
 sem_t slotCheio, slotVazio;
 sem_t mutex;
 
@@ -60,7 +60,6 @@ void *produtor(void *arg) {
   for(int i = 1; i < N + 1; i++) {
     Insere(i); //insere o proximo item
   }
-  listaEnd = 1;
   pthread_exit(NULL);
 }
 
